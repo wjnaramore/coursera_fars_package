@@ -1,0 +1,54 @@
+---
+title: "Using the fars Package"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Using the fars Package}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(fars)
+```
+
+## make_filename  
+Use make_filename to build the filename for raw data file:
+```{r make_filename}
+make_filename(2013)
+```
+
+## fars_read   
+Use fars_read to read in the complete data from a given year. By default, this function reads data provided with the package in the directory inst/extdata. If the parameter package_file is set to FALSE, this function will read files in the working directory.
+```{r read_file}
+data <- fars_read(make_filename(2013),package_file = TRUE)
+str(data)
+```
+
+## fars_read_years  
+Use fars_read_years to read in multiple years, and return a list of tibbles
+```{r read_years}
+data <- fars_read_years(c(2013,2014,2015))
+head(data)
+```
+
+## fars_summarize_years  
+Use fars_read_years to read in multiple years, and return a tibble with the number
+of incidents broken down by month and year
+```{r fars_summarize_years}
+data <- fars_summarize_years(c(2013,2014,2015))
+head(data)
+```
+
+## fars_map_state  
+Use fars_map_state to read in a single year, and plot the incidents
+on a map of the state by latitude and longitude coordinates
+```{r fars_map_state}
+data <- fars_map_state(1,2015)
+```
